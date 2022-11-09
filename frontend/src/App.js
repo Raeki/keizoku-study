@@ -1,7 +1,14 @@
-import './App.css';
+// Dependencies
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  return <div className='App'>Hello, world.</div>;
+// Components
+import Topics from './components/Topics';
+
+export default function App() {
+  return (
+    <Routes>
+      <Route exact path='/' element={<Topics />} />
+    </Routes>
+  );
 }
-
-export default App;
