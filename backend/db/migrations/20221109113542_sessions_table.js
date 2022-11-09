@@ -3,15 +3,11 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  knex.schema.createTable('topics', function (table) {
-    table.increments('id');
-    table.string('name');
-  });
-
-  knex.schema.createTable('sessions', function (table) {
+  return knex.schema.createTable('sessions', function (table) {
     table.increments('id');
     table.string('name');
     table.date('date');
+    table.integer('topic_id');
     table.foreign('topic_id').references('id').inTable('topics');
   });
 };
@@ -21,6 +17,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  knex.schema.dropTable('topics');
-  knex.schema.dropTable('sessions');
+  return knex.schema.dropTable('sessions');
 };
