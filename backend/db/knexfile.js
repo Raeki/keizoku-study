@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 console.log(process.env.PSQL_DATABASE);
 
 module.exports = {
