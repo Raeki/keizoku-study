@@ -1,5 +1,5 @@
 require('dotenv').config({ path: '../.env' });
-console.log(process.env.PSQL_DATABASE);
+console.log(process.env.PSQL_PASSWORD);
 
 module.exports = {
   development: {

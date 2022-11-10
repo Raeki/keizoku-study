@@ -7,6 +7,9 @@ import Container from '@mui/material/Container';
 // API URL import
 const API_URL = process.env.REACT_APP_API_URL;
 
+// Dummy Data
+const dummyData = [{}];
+
 export default function Topic({ topicID }) {
   // useStates
 
