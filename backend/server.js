@@ -30,6 +30,7 @@ app.get('/topics', async (req, res) => {
   }
 });
 
+// POST new topic
 app.post('/topics', async (req, res) => {
   try {
     const { name } = req.body;
