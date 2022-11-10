@@ -4,11 +4,13 @@ const express = require('express');
 const app = express();
 const knex = require('./db/knex');
 const cors = require('cors');
+const timeout = require('connect-timeout');
 const PORT = process.env.PORT || 8080;
 
 // Configurations
 app.use(cors());
 app.use(express.json());
+app.use(timeout('5s'));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -30,6 +32,19 @@ app.get('/topics', async (req, res) => {
 
 // Session API calls
 
+// GET all study sessions in a topic
+app.get('/session/:topicID', async (req, res) => {
+  try {
+    const data = await knex('sessions')
+      .where('topic_id', req.params.topicID)
+      .select({ id: 'id', date: 'date', time: 'time' });
+    res.status(200).json(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500);
+  }
+});
+
 // POST a new study session
 app.post('/session', async (req, res) => {
   try {
@@ -39,7 +54,7 @@ app.post('/session', async (req, res) => {
       time,
       topic_id: topicID,
     });
-    res.status(200).json(data);
+    res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);
     res.status(500);
