@@ -8,9 +8,9 @@ const timeout = require('connect-timeout');
 const PORT = process.env.PORT || 8080;
 
 // Configurations
-app.use(cors());
 app.use(express.json());
 app.use(timeout('5s'));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
