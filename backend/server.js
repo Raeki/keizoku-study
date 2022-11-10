@@ -62,7 +62,6 @@ app.post('/session', async (req, res) => {
 });
 
 // DELETE an existing study session
-
 app.delete('/session/:sessionID', async (req, res) => {
   try {
     const sessionID = req.params.sessionID;
