@@ -7,6 +7,9 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid'
 
+// API URL import
+const API_URL = process.env.REACT_APP_API_URL;
+
 // Default Item styling from MUI
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,18 +20,27 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 // Dummy data
-const dummyData = [
-    { name: "Code Chrysalis", id: 1 },
-    { name: "CS50", id: 2 },
-    { name: "Rust", id: 3 },
-]
+// const dummyData = [
+//     { name: "Code Chrysalis", id: 1 },
+//     { name: "CS50", id: 2 },
+//     { name: "Rust", id: 3 },
+// ]
 
 export default function Topics() {
     // useStates
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {
-        setTopics(dummyData);
+        (async () => {
+            try {
+                const rawData = await fetch(`${API_URL}/topics`);
+                console.log(rawData)
+                const data = await rawData.json();
+                setTopics(data);
+            } catch (e) {
+                console.error(e);
+            }
+        })()
     }, [])
 
     return (
