@@ -54,6 +54,24 @@ app.post('/session', async (req, res) => {
       time,
       topic_id: topicID,
     });
+    res.status(201).json(data[0]);
+  } catch (e) {
+    console.error(e);
+    res.status(500);
+  }
+});
+
+// DELETE an existing study session
+
+app.delete('/session/:sessionID', async (req, res) => {
+  try {
+    const sessionID = req.params.sessionID;
+
+    const data = await knex('sessions')
+      .returning(['id'])
+      .where('id', sessionID)
+      .del();
+    console.log(`session: ${sessionID} deleted`);
     res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);
