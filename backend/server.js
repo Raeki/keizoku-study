@@ -1,10 +1,8 @@
-require('dotenv').config({ path: '.env.local' });
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const knex = require('./db/knex');
 const PORT = process.env.PORT || 8080;
-
-// console.log(process.env.PORT);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
