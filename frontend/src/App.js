@@ -1,7 +1,23 @@
-import './App.css';
+// Dependencies
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  return <div className='App'>Hello, world.</div>;
+// Components
+import AllTopics from './components/AllTopics';
+import Topic from './components/Topic';
+
+export default function App() {
+  // useStates
+  const [topicID, setTopicID] = useState();
+
+  return (
+    <Routes>
+      <Route exact path='/' element={<AllTopics setTopicID={setTopicID} />} />
+      <Route
+        path='/all-topics'
+        element={<AllTopics setTopicID={setTopicID} />}
+      />
+      <Route path='/topic' element={<Topic topicID={topicID} />} />
+    </Routes>
+  );
 }
-
-export default App;
