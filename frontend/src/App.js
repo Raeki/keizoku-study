@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Components
-import AllTopics from './components/AllTopics';
+import AllTopics from './components/AllTopics/AllTopics';
 import Topic from './components/Topic';
 
 export default function App() {

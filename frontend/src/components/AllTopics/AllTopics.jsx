@@ -49,6 +49,9 @@ export default function AllTopics({ setTopicID }) {
           );
         })}
       </Grid>
+      <Button variant='contained' onClick>
+        Add Topic
+      </Button>
     </Container>
   );
 }
