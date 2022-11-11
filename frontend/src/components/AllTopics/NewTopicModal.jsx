@@ -50,6 +50,7 @@ export default function BasicModal({ topics, setTopics }) {
         });
         const data = await rawData.json();
         setTopics([...topics, data]);
+        handleClose();
       } catch (e) {
         console.error(e);
       }
