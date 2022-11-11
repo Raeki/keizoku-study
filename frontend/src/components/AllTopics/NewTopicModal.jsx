@@ -39,7 +39,6 @@ export default function BasicModal({ topics, setTopics }) {
   function handleSubmit() {
     (async () => {
       const body = { name };
-      console.log(body);
       try {
         const rawData = await fetch(`${API_URL}/topics`, {
           method: 'post',
