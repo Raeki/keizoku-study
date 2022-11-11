@@ -1,6 +1,9 @@
 // Dependencies
 import React, { useState, useEffect } from 'react';
 
+// Components
+import NewSessionModal from './NewSessionModal';
+
 // MUI
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -33,7 +36,7 @@ function Item({ date, time }) {
   );
 }
 
-export default function Topic({ topicID }) {
+export default function Sessions({ topicID }) {
   // useStates
   const [sessions, setSessions] = useState([]);
 
@@ -53,6 +56,11 @@ export default function Topic({ topicID }) {
 
   return (
     <Container>
+      <NewSessionModal
+        sessions={sessions}
+        setSessions={setSessions}
+        topicID={topicID}
+      />
       <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         <nav aria-label='sessions'>
           <List>
