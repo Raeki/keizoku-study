@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Component imports
+import NewTopicModal from './NewTopicModal';
+
 // MUI
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -49,6 +52,7 @@ export default function AllTopics({ setTopicID }) {
           );
         })}
       </Grid>
+      <NewTopicModal topics={topics} setTopics={setTopics} />
     </Container>
   );
 }
