@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 app.get('/topics', async (req, res) => {
   try {
     const data = await knex.select({ id: 'id', name: 'name' }).from('topics');
-    console.log('all topics: ' + data);
     res.status(200).json(data);
   } catch (e) {
     console.error(e);
@@ -34,6 +33,7 @@ app.get('/topics', async (req, res) => {
 app.post('/topics', async (req, res) => {
   try {
     const { name } = req.body;
+    console.log(req.body);
     const data = await knex('topics').returning(['id', 'name']).insert({
       name,
     });
