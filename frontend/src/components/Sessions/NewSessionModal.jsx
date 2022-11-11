@@ -23,24 +23,30 @@ const style = {
   p: 4,
 };
 
-export default function NewTopicModal({ topics, setTopics }) {
+export default function NewSessionModal({ sessions, setSessions, topicID }) {
   // Modal states
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   // Form states
-  const [name, setName] = useState('');
-  const handleName = e => {
-    setName(e.target.value);
+  const [minutes, setMinutes] = useState('');
+  const handleMinutes = e => {
+    setMinutes(e.target.value);
   };
 
   // submit API call
   function handleSubmit() {
+    let date = new Date();
+    date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
     (async () => {
-      const body = { name };
+      const body = {
+        date,
+        time: Number.parseInt(minutes),
+        topicID,
+      };
       try {
-        const rawData = await fetch(`${API_URL}/topics`, {
+        const rawData = await fetch(`${API_URL}/session`, {
           method: 'post',
           headers: {
             'Content-type': 'application/json',
@@ -48,7 +54,7 @@ export default function NewTopicModal({ topics, setTopics }) {
           body: JSON.stringify(body),
         });
         const data = await rawData.json();
-        setTopics([...topics, data]);
+        setSessions([data, ...sessions]);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -58,7 +64,7 @@ export default function NewTopicModal({ topics, setTopics }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Topic</Button>
+      <Button onClick={handleOpen}>New Session</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -67,10 +73,10 @@ export default function NewTopicModal({ topics, setTopics }) {
       >
         <Box sx={style}>
           <TextField
-            label='Name'
+            label='Minutes'
             variant='outlined'
-            value={name}
-            onChange={handleName}
+            value={minutes}
+            onChange={handleMinutes}
           />
           <div>
             <Button variant='contained' onClick={handleSubmit}>

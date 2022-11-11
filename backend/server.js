@@ -49,9 +49,10 @@ app.post('/topics', async (req, res) => {
 
 // GET all study sessions in a topic
 app.get('/session/:topicID', async (req, res) => {
+  const topicID = req.params.topicID;
   try {
     const data = await knex('sessions')
-      .where('topic_id', req.params.topicID)
+      .where('topic_id', topicID)
       .select({ id: 'id', date: 'date', time: 'time' });
     res.status(200).json(data);
   } catch (e) {
