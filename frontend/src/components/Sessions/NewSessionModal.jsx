@@ -38,7 +38,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
   // submit API call
   function handleSubmit() {
     let date = new Date();
-    date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     (async () => {
       const body = {
         date,
