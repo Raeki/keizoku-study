@@ -45,6 +45,21 @@ app.post('/topics', async (req, res) => {
   }
 });
 
+// PATCH goal
+app.patch('/topics/:topicID', async (req, res) => {
+  try {
+    const { goal } = req.body;
+    console.log(goal);
+    const data = await knex('topics')
+      .where('id', req.params.topicID)
+      .update({ goal }, ['goal']);
+    console.log(`topic_id: ${req.params.topicID} new goal: ${goal}`);
+    res.status(200).json(data[0]);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 // Session API calls
 
 // GET all study sessions in a topic
