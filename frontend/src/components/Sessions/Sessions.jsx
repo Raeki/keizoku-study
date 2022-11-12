@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 // Components
 import NewSessionModal from './NewSessionModal';
 import EditSessionModal from './EditSessionModal';
+import DeleteSessionModal from './DeleteSessionModal';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -45,7 +46,15 @@ function Item({ date, time, sessionID, sessions, setSessions }) {
         />
       </ListItemButton>
       <ListItemButton>
-        <ListItemText primary='Delete' />
+        <ListItemText
+          primary={
+            <DeleteSessionModal
+              sessionID={sessionID}
+              sessions={sessions}
+              setSessions={setSessions}
+            />
+          }
+        />
       </ListItemButton>
     </ListItem>
   );
@@ -75,7 +84,7 @@ export default function Sessions({ topicID }) {
         setSessions={setSessions}
         topicID={topicID}
       />
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
         <nav aria-label='sessions'>
           <List>
             {sessions
