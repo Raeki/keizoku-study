@@ -44,7 +44,7 @@ export default function Sessions({ topicID }) {
   useEffect(() => {
     (async () => {
       try {
-        const rawData = await fetch(`${API_URL}/session/${topicID}`);
+        const rawData = await fetch(`${API_URL}/sessions/${topicID}`);
         const data = await rawData.json();
         console.log(data);
         setSessions(data);
