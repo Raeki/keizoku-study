@@ -109,7 +109,7 @@ app.patch('/sessions/:sessionID', async (req, res) => {
     );
     console.log(`session: ${session_id} updated to:`);
     console.log(data);
-    res.status(200).json(data);
+    res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);
     res.status(500);
