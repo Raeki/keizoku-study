@@ -47,7 +47,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
       };
       try {
         const rawData = await fetch(`${API_URL}/sessions`, {
-          method: 'post',
+          method: 'POST',
           headers: {
             'Content-type': 'application/json',
           },

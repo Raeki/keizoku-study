@@ -79,14 +79,25 @@ export default function Sessions({ topicID }) {
 
   return (
     <Container>
-      <NewSessionModal
-        sessions={sessions}
-        setSessions={setSessions}
-        topicID={topicID}
-      />
       <Box sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
         <nav aria-label='sessions'>
           <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <CalendarIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <NewSessionModal
+                      sessions={sessions}
+                      setSessions={setSessions}
+                      topicID={topicID}
+                    />
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
             {sessions
               .sort((a, b) => {
                 return new Date(b.date).getTime() - new Date(a.date).getTime();
