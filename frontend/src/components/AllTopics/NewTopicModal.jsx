@@ -41,7 +41,7 @@ export default function NewTopicModal({ topics, setTopics }) {
       const body = { name };
       try {
         const rawData = await fetch(`${API_URL}/topics`, {
-          method: 'post',
+          method: 'POST',
           headers: {
             'Content-type': 'application/json',
           },

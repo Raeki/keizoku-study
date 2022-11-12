@@ -12,16 +12,22 @@ import Container from '@mui/material/Container';
 export default function App() {
   // useStates
   const [topicID, setTopicID] = useState();
+  const [topicName, setTopicName] = useState();
 
   return (
     <Container>
       <Routes>
-        <Route exact path='/' element={<AllTopics setTopicID={setTopicID} />} />
         <Route
-          path='/all-topics'
-          element={<AllTopics setTopicID={setTopicID} />}
+          exact
+          path='/'
+          element={
+            <AllTopics setTopicID={setTopicID} setTopicName={setTopicName} />
+          }
         />
-        <Route path='/topic' element={<Topic topicID={topicID} />} />
+        <Route
+          path='/topic'
+          element={<Topic topicID={topicID} topicName={topicName} />}
+        />
       </Routes>
     </Container>
   );

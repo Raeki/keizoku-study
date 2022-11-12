@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 // API URL import
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function AllTopics({ setTopicID }) {
+export default function AllTopics({ setTopicID, setTopicName }) {
   // useStates
   const [topics, setTopics] = useState([]);
 
@@ -43,6 +43,7 @@ export default function AllTopics({ setTopicID }) {
                 variant='contained'
                 onClick={() => {
                   setTopicID(obj.id);
+                  setTopicName(obj.name);
                   navigate('/topic');
                 }}
               >
