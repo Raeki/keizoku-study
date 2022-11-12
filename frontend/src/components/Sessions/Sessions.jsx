@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 
 // Components
 import NewSessionModal from './NewSessionModal';
+import EditSessionModal from './EditSessionModal';
+import DeleteSessionModal from './DeleteSessionModal';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -18,8 +20,7 @@ import CalendarIcon from '@mui/icons-material/CalendarTodayTwoTone';
 const API_URL = process.env.REACT_APP_API_URL;
 
 // List item definition
-
-function Item({ date, time }) {
+function Item({ date, time, sessionID, sessions, setSessions }) {
   return (
     <ListItem disablePadding>
       <ListItemButton>
@@ -28,8 +29,31 @@ function Item({ date, time }) {
         </ListItemIcon>
         <ListItemText
           primary={`${new Date(date)
-            .toUTCString()
-            .substring(0, date.length - 13)} minutes: ${time}`}
+            .toString()
+            .substring(0, date.length - 8)} Minutes: ${time}`}
+        />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemText
+          primary={
+            <EditSessionModal
+              sessionID={sessionID}
+              date={date}
+              sessions={sessions}
+              setSessions={setSessions}
+            />
+          }
+        />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemText
+          primary={
+            <DeleteSessionModal
+              sessionID={sessionID}
+              sessions={sessions}
+              setSessions={setSessions}
+            />
+          }
         />
       </ListItemButton>
     </ListItem>
@@ -44,9 +68,8 @@ export default function Sessions({ topicID }) {
   useEffect(() => {
     (async () => {
       try {
-        const rawData = await fetch(`${API_URL}/session/${topicID}`);
+        const rawData = await fetch(`${API_URL}/sessions/${topicID}`);
         const data = await rawData.json();
-        console.log(data);
         setSessions(data);
       } catch (e) {
         console.error(e);
@@ -61,12 +84,24 @@ export default function Sessions({ topicID }) {
         setSessions={setSessions}
         topicID={topicID}
       />
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
         <nav aria-label='sessions'>
           <List>
-            {sessions.map(obj => {
-              return <Item date={obj.date} time={obj.time} />;
-            })}
+            {sessions
+              .sort((a, b) => {
+                return new Date(b.date).getTime() - new Date(a.date).getTime();
+              })
+              .map(obj => {
+                return (
+                  <Item
+                    date={obj.date}
+                    time={obj.time}
+                    sessionID={obj.id}
+                    sessions={sessions}
+                    setSessions={setSessions}
+                  />
+                );
+              })}
           </List>
         </nav>
       </Box>

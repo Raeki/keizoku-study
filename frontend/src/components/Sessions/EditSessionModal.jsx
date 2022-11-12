@@ -23,7 +23,12 @@ const style = {
   p: 4,
 };
 
-export default function NewSessionModal({ sessions, setSessions, topicID }) {
+export default function NewSessionModal({
+  sessionID,
+  date,
+  sessions,
+  setSessions,
+}) {
   // Modal states
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -31,30 +36,35 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
 
   // Form states
   const [minutes, setMinutes] = useState('');
+  const [newDate, setNewDate] = useState(date);
+
+  // State handlers
   const handleMinutes = e => {
     setMinutes(e.target.value);
+  };
+  const handleNewDate = e => {
+    setNewDate(e.target.value);
   };
 
   // submit API call
   function handleSubmit() {
-    let date = new Date();
-    date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     (async () => {
       const body = {
-        date,
+        date: newDate,
         time: Number.parseInt(minutes),
-        topicID,
       };
       try {
-        const rawData = await fetch(`${API_URL}/sessions`, {
-          method: 'post',
+        const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
+          method: 'PATCH',
           headers: {
             'Content-type': 'application/json',
           },
           body: JSON.stringify(body),
         });
-        const data = await rawData.json();
-        setSessions([data, ...sessions]);
+        let data = await rawData.json();
+        const newSessions = [...sessions];
+        newSessions[0] = data;
+        setSessions(newSessions);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -64,7 +74,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Session</Button>
+      <Button onClick={handleOpen}>Edit</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -77,6 +87,12 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
             variant='outlined'
             value={minutes}
             onChange={handleMinutes}
+          />
+          <TextField
+            label='yyyy-mm-dd'
+            variant='outlined'
+            value={newDate}
+            onChange={handleNewDate}
           />
           <div>
             <Button variant='contained' onClick={handleSubmit}>

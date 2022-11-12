@@ -48,7 +48,7 @@ app.post('/topics', async (req, res) => {
 // Session API calls
 
 // GET all study sessions in a topic
-app.get('/session/:topicID', async (req, res) => {
+app.get('/sessions/:topicID', async (req, res) => {
   const topicID = req.params.topicID;
   try {
     const data = await knex('sessions')
@@ -62,7 +62,7 @@ app.get('/session/:topicID', async (req, res) => {
 });
 
 // POST a new study session
-app.post('/session', async (req, res) => {
+app.post('/sessions', async (req, res) => {
   try {
     const { date, time, topicID } = req.body;
     const data = await knex('sessions').returning(['date', 'time']).insert({
@@ -78,15 +78,37 @@ app.post('/session', async (req, res) => {
 });
 
 // DELETE an existing study session
-app.delete('/session/:sessionID', async (req, res) => {
+app.delete('/sessions/:sessionID', async (req, res) => {
   try {
-    const sessionID = req.params.sessionID;
+    const session_id = req.params.sessionID;
 
     const data = await knex('sessions')
       .returning(['id'])
-      .where('id', sessionID)
+      .where('id', session_id)
       .del();
-    console.log(`session: ${sessionID} deleted`);
+    console.log(`session: ${session_id} deleted`);
+    res.status(200).json(data[0]);
+  } catch (e) {
+    console.error(e);
+    res.status(500);
+  }
+});
+
+// PATCH an existing study session
+app.patch('/sessions/:sessionID', async (req, res) => {
+  try {
+    const { date, time } = req.body;
+    const session_id = req.params.sessionID;
+
+    const data = await knex('sessions').where('id', session_id).update(
+      {
+        date,
+        time,
+      },
+      ['id', 'date', 'time']
+    );
+    console.log(`session: ${session_id} updated to:`);
+    console.log(data);
     res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);
