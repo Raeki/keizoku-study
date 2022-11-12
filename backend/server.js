@@ -21,7 +21,9 @@ app.get('/', (req, res) => {
 // GET all topics
 app.get('/topics', async (req, res) => {
   try {
-    const data = await knex.select({ id: 'id', name: 'name' }).from('topics');
+    const data = await knex
+      .select({ id: 'id', name: 'name', goal: 'goal' })
+      .from('topics');
     res.status(200).json(data);
   } catch (e) {
     console.error(e);

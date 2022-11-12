@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import NewSessionModal from './NewSessionModal';
 import EditSessionModal from './EditSessionModal';
 import DeleteSessionModal from './DeleteSessionModal';
+import EditGoal from './EditGoal';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -60,10 +61,9 @@ function Item({ date, time, sessionID, sessions, setSessions }) {
   );
 }
 
-export default function Sessions({ topicID }) {
+export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
   // useStates
   const [sessions, setSessions] = useState([]);
-  const [avgMinutes, setAvgMinutes] = useState();
 
   // fetch all sessions with topicID
   useEffect(() => {
@@ -72,27 +72,30 @@ export default function Sessions({ topicID }) {
         const rawData = await fetch(`${API_URL}/sessions/${topicID}`);
         const data = await rawData.json();
         setSessions(data);
-        console.log(sessions);
       } catch (e) {
         console.error(e);
       }
     })();
-
-    setAvgMinutes(getAvgMinutes(sessions));
   }, [topicID]);
 
   function getAvgMinutes(sessions) {
-    const max = Math.max(...sessions.map(obj => new Date(obj.date).valueOf()));
-    const min = Math.min(...sessions.map(obj => new Date(obj.date).valueOf()));
-    const minutes = sessions
-      .map(obj => {
-        return obj.time;
-      })
-      .reduce((a, b) => {
-        return a + b;
-      });
-    const days = Math.floor((max - min) / 1000 / 60 / 60 / 24);
-    return minutes / days;
+    if (sessions.length) {
+      const max = Math.max(
+        ...sessions.map(obj => new Date(obj.date).valueOf())
+      );
+      const min = Math.min(
+        ...sessions.map(obj => new Date(obj.date).valueOf())
+      );
+      const minutes = sessions
+        .map(obj => {
+          return obj.time;
+        })
+        .reduce((a, b) => {
+          return a + b;
+        });
+      const days = Math.floor((max - min) / 1000 / 60 / 60 / 24);
+      return minutes / days;
+    }
   }
 
   return (
@@ -116,7 +119,18 @@ export default function Sessions({ topicID }) {
                 />
               </ListItemButton>
               <ListItemButton>
-                <ListItemText primary={`Min/Day: ${avgMinutes}`} />
+                <ListItemText primary={`Min/Day: ${getAvgMinutes(sessions)}`} />
+              </ListItemButton>
+              <ListItemButton>
+                <ListItemText
+                  primary={
+                    <EditGoal
+                      topicID={topicID}
+                      goal={topicGoal}
+                      setTopicGoal={setTopicGoal}
+                    />
+                  }
+                />
               </ListItemButton>
             </ListItem>
             {sessions

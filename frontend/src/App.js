@@ -13,6 +13,7 @@ export default function App() {
   // useStates
   const [topicID, setTopicID] = useState();
   const [topicName, setTopicName] = useState();
+  const [topicGoal, setTopicGoal] = useState();
 
   return (
     <Container>
@@ -21,12 +22,23 @@ export default function App() {
           exact
           path='/'
           element={
-            <AllTopics setTopicID={setTopicID} setTopicName={setTopicName} />
+            <AllTopics
+              setTopicID={setTopicID}
+              setTopicName={setTopicName}
+              setTopicGoal={setTopicGoal}
+            />
           }
         />
         <Route
           path='/topic'
-          element={<Topic topicID={topicID} topicName={topicName} />}
+          element={
+            <Topic
+              topicID={topicID}
+              topicName={topicName}
+              topicGoal={topicGoal}
+              setTopicGoal={setTopicGoal}
+            />
+          }
         />
       </Routes>
     </Container>
