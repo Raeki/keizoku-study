@@ -82,11 +82,13 @@ app.get('/sessions/:topicID', async (req, res) => {
 app.post('/sessions', async (req, res) => {
   try {
     const { date, time, topicID } = req.body;
-    const data = await knex('sessions').returning(['date', 'time']).insert({
-      date,
-      time,
-      topic_id: topicID,
-    });
+    const data = await knex('sessions')
+      .returning(['date', 'time', 'id'])
+      .insert({
+        date,
+        time,
+        topic_id: topicID,
+      });
     res.status(201).json(data[0]);
   } catch (e) {
     console.error(e);
