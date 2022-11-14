@@ -26,7 +26,7 @@ Instructions assume you will be deploying on [render](https://www.render.com).
 7. Set ```Start Command``` to ```npm run start```.
 8. Under ```Advanced``` click ```Add Environment Variable```.
 9. Create a variable with Key: ```DATABASE_URL``` set to your PostgreSQL ```Internal Database URL``` as mentioned in Database setup step 2.
-10. Create a variable with Key: ```NODE_ENV``` set to ```deployment```.
+10. Create a variable with Key: ```NODE_ENV``` set to ```production```.
 11. Deploy!
 12. Make a note of your backend's full URL ```https://www``` included.
 
