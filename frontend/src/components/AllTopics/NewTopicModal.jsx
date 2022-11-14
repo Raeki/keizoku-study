@@ -26,6 +26,7 @@ const style = {
 export default function NewTopicModal({ topics, setTopics }) {
   // Modal states
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -40,6 +41,7 @@ export default function NewTopicModal({ topics, setTopics }) {
     (async () => {
       const body = { name };
       try {
+        setDisabled(true);
         const rawData = await fetch(`${API_URL}/topics`, {
           method: 'POST',
           headers: {
@@ -49,6 +51,8 @@ export default function NewTopicModal({ topics, setTopics }) {
         });
         const data = await rawData.json();
         setTopics([...topics, data]);
+        setDisabled(false);
+        setName('');
         handleClose();
       } catch (e) {
         console.error(e);
@@ -73,7 +77,11 @@ export default function NewTopicModal({ topics, setTopics }) {
             onChange={handleName}
           />
           <div>
-            <Button variant='contained' onClick={handleSubmit}>
+            <Button
+              variant='contained'
+              disabled={disabled}
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
             <Button variant='contained' color='error' onClick={handleClose}>

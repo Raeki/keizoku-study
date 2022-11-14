@@ -26,6 +26,7 @@ const style = {
 export default function NewSessionModal({ sessions, setSessions, topicID }) {
   // Modal states
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -40,6 +41,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
     let date = new Date();
     // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     (async () => {
+      setDisabled(true);
       const body = {
         date,
         time: Number.parseInt(minutes),
@@ -55,6 +57,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
         });
         const data = await rawData.json();
         setSessions([data, ...sessions]);
+        setDisabled(false);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -79,7 +82,11 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
             onChange={handleMinutes}
           />
           <div>
-            <Button variant='contained' onClick={handleSubmit}>
+            <Button
+              variant='contained'
+              disabled={disabled}
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
             <Button variant='contained' color='error' onClick={handleClose}>

@@ -26,6 +26,7 @@ const style = {
 export default function NewSessionModal({ sessionID, sessions, setSessions }) {
   // Modal states
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -33,6 +34,7 @@ export default function NewSessionModal({ sessionID, sessions, setSessions }) {
   function handleSubmit() {
     (async () => {
       try {
+        setDisabled(true);
         const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
           method: 'DELETE',
           headers: {
@@ -44,6 +46,7 @@ export default function NewSessionModal({ sessionID, sessions, setSessions }) {
           return obj.id !== data.id;
         });
         setSessions(newSessions);
+        setDisabled(false);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -62,7 +65,11 @@ export default function NewSessionModal({ sessionID, sessions, setSessions }) {
       >
         <Box sx={style}>
           <div>
-            <Button variant='contained' onClick={handleSubmit}>
+            <Button
+              variant='contained'
+              disabled={disabled}
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
             <Button variant='contained' color='error' onClick={handleClose}>

@@ -26,6 +26,7 @@ const style = {
 export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
   // Modal states
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -40,6 +41,7 @@ export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
   // submit API call
   function handleSubmit() {
     (async () => {
+      setDisabled(true);
       const body = {
         goal: Number.parseInt(minutes),
       };
@@ -53,6 +55,7 @@ export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
         });
         let data = await rawData.json();
         setTopicGoal(data.goal);
+        setDisabled(false);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -77,7 +80,11 @@ export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
             onChange={handleMinutes}
           />
           <div>
-            <Button variant='contained' onClick={handleSubmit}>
+            <Button
+              variant='contained'
+              disabled={disabled}
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
             <Button variant='contained' color='error' onClick={handleClose}>

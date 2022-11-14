@@ -31,6 +31,7 @@ export default function NewSessionModal({
 }) {
   // Modal states
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -49,6 +50,7 @@ export default function NewSessionModal({
   // submit API call
   function handleSubmit() {
     (async () => {
+      setDisabled(true);
       const body = {
         date: newDate,
         time: Number.parseInt(minutes),
@@ -65,6 +67,7 @@ export default function NewSessionModal({
         const newSessions = [...sessions];
         newSessions[0] = data;
         setSessions(newSessions);
+        setDisabled(false);
         handleClose();
       } catch (e) {
         console.error(e);
@@ -95,7 +98,11 @@ export default function NewSessionModal({
             onChange={handleNewDate}
           />
           <div>
-            <Button variant='contained' onClick={handleSubmit}>
+            <Button
+              variant='contained'
+              disabled={disabled}
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
             <Button variant='contained' color='error' onClick={handleClose}>
