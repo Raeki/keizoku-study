@@ -93,8 +93,10 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
         .reduce((a, b) => {
           return a + b;
         });
-      const days = Math.floor((max - min) / 1000 / 60 / 60 / 24);
-      return minutes / days;
+      let days = Math.floor((max - min) / 1000 / 60 / 60 / 24);
+      days = days === 0 ? 1 : days;
+      const average = minutes / days;
+      return average;
     }
   }
 
@@ -126,7 +128,7 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
                   primary={
                     <EditGoalModal
                       topicID={topicID}
-                      goal={topicGoal}
+                      goal={`mins/day: ${topicGoal}`}
                       setTopicGoal={setTopicGoal}
                     />
                   }
