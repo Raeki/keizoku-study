@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm install && npm run migrate-latest",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodemon ./server.js",
     "migrate-latest": "npx knex migrate:latest --knexfile ./db/knexfile.js",
     "create-migration": "npx knex --knexfile=./db/knexfile.js migrate:make",
     "seeds": "knex seed:run --knexfile ./db/knexfile.js"
