@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import NewSessionModal from './NewSessionModal';
 import EditSessionModal from './EditSessionModal';
 import DeleteSessionModal from './DeleteSessionModal';
-import EditGoal from './EditGoal';
+import EditGoalModal from './EditGoalModal';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -124,7 +124,7 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
               <ListItemButton>
                 <ListItemText
                   primary={
-                    <EditGoal
+                    <EditGoalModal
                       topicID={topicID}
                       goal={topicGoal}
                       setTopicGoal={setTopicGoal}
