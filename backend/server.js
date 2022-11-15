@@ -82,13 +82,14 @@ app.get('/sessions/:topicID', async (req, res) => {
 app.post('/sessions', async (req, res) => {
   try {
     const { date, time, topicID } = req.body;
-    const data = await knex('sessions')
-      .returning(['date', 'time', 'id'])
-      .insert({
+    const data = await knex('sessions').insert(
+      {
         date,
         time,
         topic_id: topicID,
-      });
+      },
+      ['date', 'time', 'id']
+    );
     res.status(201).json(data[0]);
   } catch (e) {
     console.error(e);
@@ -101,11 +102,8 @@ app.delete('/sessions/:sessionID', async (req, res) => {
   try {
     const session_id = req.params.sessionID;
 
-    const data = await knex('sessions')
-      .returning(['id'])
-      .where('id', session_id)
-      .del();
-    console.log(`session: ${session_id} deleted`);
+    const data = await knex('sessions').where('id', session_id).del(['id']);
+    console.log(`session_id: ${data[0].id} deleted`);
     res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);
