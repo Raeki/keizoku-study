@@ -93,7 +93,7 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
         .reduce((a, b) => {
           return a + b;
         });
-      let days = Math.floor((max - min) / 1000 / 60 / 60 / 24);
+      let days = Math.ceil((max - min) / 1000 / 60 / 60 / 24);
       days = days === 0 ? 1 : days;
       const average = minutes / days;
       return average;
