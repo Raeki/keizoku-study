@@ -78,7 +78,6 @@ async function makeToken(id, email) {
   const token = jwt.sign({ id, email }, process.env.TOKEN_KEY, {
     expiresIn: '7d',
   });
-  console.log(token);
   return token;
 }
 module.exports = {
