@@ -12,6 +12,7 @@ const sessions = require('./controller/sessions');
 
 // middleware
 const { validateEmail, validateLoginBody } = require('./middleware/validation');
+const { verifyToken } = require('./middleware/auth');
 
 // Configurations
 const PORT = process.env.PORT || 8080;
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
 /* Topics API calls */
 
 // GET all topics
-app.get('/topics', topics.allTopics);
+app.get('/topics', verifyToken, topics.allTopics);
 
 // POST new topic
 app.post('/topics', topics.newTopic);

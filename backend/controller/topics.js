@@ -2,9 +2,11 @@ const knex = require('../db/knex');
 
 async function allTopics(req, res) {
   try {
+    const { user_id } = req.body;
     const data = await knex('topics')
       .orderBy('name')
-      .select({ id: 'id', name: 'name', goal: 'goal' });
+      .select({ id: 'id', name: 'name', goal: 'goal' })
+      .where('user_id', user_id);
     res.status(200).json(data);
   } catch (e) {
     console.error(e);
