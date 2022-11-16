@@ -31,7 +31,7 @@ app.get('/topics', topics.allTopics);
 // POST new topic
 app.post('/topics', topics.newTopic);
 
-// PATCH goal
+// PATCH topic goal
 app.patch('/topics/:topicID', topics.editGoal);
 
 /* Sessions API calls */
