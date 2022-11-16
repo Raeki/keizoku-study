@@ -15,9 +15,12 @@ async function allTopics(req, res) {
 async function newTopic(req, res) {
   try {
     const { name } = req.body;
-    const data = await knex('topics').returning(['id', 'name']).insert({
-      name,
-    });
+    const data = await knex('topics').insert(
+      {
+        name,
+      },
+      ['id', 'name']
+    );
     console.log('new topic: ');
     console.log(data[0]);
     res.status(201).json(data[0]);

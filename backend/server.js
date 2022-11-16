@@ -11,7 +11,7 @@ const topics = require('./controller/topics');
 const sessions = require('./controller/sessions');
 
 // middleware
-const { validateEmail } = require('./middleware/validation');
+const { validateEmail, validateLoginBody } = require('./middleware/validation');
 
 // Configurations
 const PORT = process.env.PORT || 8080;
@@ -53,7 +53,7 @@ app.delete('/sessions/:sessionID', sessions.deleteSession);
 // POST a new user
 app.post('/signup', validateEmail, users.signup);
 // POST a login request
-app.post('/signin', users.signin);
+app.post('/signin', validateLoginBody, users.signin);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
