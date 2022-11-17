@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 app.get('/topics', verifyToken, topics.allTopics);
 
 // POST new topic
-app.post('/topics', topics.newTopic);
+app.post('/topics', verifyToken, topics.newTopic);
 
 // PATCH topic goal
 app.patch('/topics/:topicID', topics.editGoal);
