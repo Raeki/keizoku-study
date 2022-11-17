@@ -17,12 +17,13 @@ async function allSessions(req, res) {
 
 async function newSession(req, res) {
   try {
-    const { date, time, topicID } = req.body;
+    const { date, minutes, topicID, user_id } = req.body;
     const data = await knex('sessions').insert(
       {
         date,
-        time,
+        time: minutes,
         topic_id: topicID,
+        user_id,
       },
       ['date', 'time', 'id']
     );

@@ -41,7 +41,7 @@ app.patch('/topics/:topicID', verifyToken, topics.editGoal);
 app.get('/sessions/:topicID', verifyToken, sessions.allSessions);
 
 // POST a new study session
-app.post('/sessions', sessions.newSession);
+app.post('/sessions', verifyToken, sessions.newSession);
 
 // PATCH an existing study session
 app.patch('/sessions/:sessionID', sessions.editSession);
