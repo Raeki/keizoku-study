@@ -16,12 +16,14 @@ async function allTopics(req, res) {
 
 async function newTopic(req, res) {
   try {
-    const { name } = req.body;
+    const { user_id, name, goal } = req.body;
     const data = await knex('topics').insert(
       {
         name,
+        goal,
+        user_id,
       },
-      ['id', 'name']
+      ['id', 'name', 'goal']
     );
     console.log('new topic: ');
     console.log(data[0]);

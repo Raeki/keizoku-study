@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { postNewTopic } = require('../../fetch/post');
 
 // Default MUI styling
 const style = {
@@ -32,24 +32,20 @@ export default function NewTopicModal({ topics, setTopics }) {
 
   // Form states
   const [name, setName] = useState('');
+  const [goal, setGoal] = useState('');
   const handleName = e => {
     setName(e.target.value);
+  };
+  const handleGoal = e => {
+    setGoal(e.target.value);
   };
 
   // submit API call
   function handleSubmit() {
     (async () => {
-      const body = { name };
       try {
         setDisabled(true);
-        const rawData = await fetch(`${API_URL}/topics`, {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        });
-        const data = await rawData.json();
+        const data = await postNewTopic(name, goal);
         setTopics([...topics, data]);
         setDisabled(false);
         setName('');
@@ -75,6 +71,12 @@ export default function NewTopicModal({ topics, setTopics }) {
             variant='outlined'
             value={name}
             onChange={handleName}
+          />
+          <TextField
+            label='Goal'
+            variant='outlined'
+            value={goal}
+            onChange={handleGoal}
           />
           <div>
             <Button

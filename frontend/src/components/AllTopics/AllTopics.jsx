@@ -10,8 +10,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
-// API URL import
-const { getAllTopics } = require('../../Fetch/get');
+// API fetch import
+const { getAllTopics } = require('../../fetch/get');
 
 export default function AllTopics({ setTopicID, setTopicName, setTopicGoal }) {
   // useStates
