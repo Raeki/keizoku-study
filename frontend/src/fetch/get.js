@@ -15,6 +15,22 @@ async function getAllTopics() {
   }
 }
 
+async function getAllSessions(topicID) {
+  try {
+    const rawData = await fetch(`${API_URL}/sessions/${topicID}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await rawData.json();
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 module.exports = {
   getAllTopics,
+  getAllSessions,
 };

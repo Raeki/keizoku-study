@@ -2,9 +2,11 @@ const knex = require('../db/knex');
 
 async function allSessions(req, res) {
   const topicID = req.params.topicID;
+  const { user_id } = req.body;
   try {
     const data = await knex('sessions')
       .where('topic_id', topicID)
+      .andWhere('user_id', user_id)
       .select({ id: 'id', date: 'date', time: 'time' });
     res.status(200).json(data);
   } catch (e) {

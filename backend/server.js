@@ -38,7 +38,7 @@ app.patch('/topics/:topicID', verifyToken, topics.editGoal);
 /* Sessions API calls */
 
 // GET all study sessions in a topic
-app.get('/sessions/:topicID', sessions.allSessions);
+app.get('/sessions/:topicID', verifyToken, sessions.allSessions);
 
 // POST a new study session
 app.post('/sessions', sessions.newSession);
