@@ -36,12 +36,13 @@ async function newTopic(req, res) {
 
 async function editGoal(req, res) {
   try {
-    const { goal } = req.body;
+    const { user_id, goal } = req.body;
     console.log(goal);
     const data = await knex('topics')
       .where('id', req.params.topicID)
-      .update({ goal }, ['goal']);
-    console.log(`topic_id: ${req.params.topicID} new goal: ${goal}`);
+      .andWhere('user_id', user_id)
+      .update({ goal }, ['id', 'goal']);
+    console.log(`topic_id: ${data[0].id} new goal: ${data[0].goal}`);
     res.status(200).json(data[0]);
   } catch (e) {
     console.error(e);

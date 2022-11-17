@@ -33,7 +33,7 @@ app.get('/topics', verifyToken, topics.allTopics);
 app.post('/topics', verifyToken, topics.newTopic);
 
 // PATCH topic goal
-app.patch('/topics/:topicID', topics.editGoal);
+app.patch('/topics/:topicID', verifyToken, topics.editGoal);
 
 /* Sessions API calls */
 
