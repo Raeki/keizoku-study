@@ -23,7 +23,7 @@ const { getAllSessions } = require('../../fetch/get');
 // List item definition TURN INTO A COMPONENT
 function Item({ date, time, sessionID, sessions, setSessions }) {
   return (
-    <ListItem disablePadding>
+    <ListItem disablePadding key={sessionID}>
       <ListItemButton>
         <ListItemIcon>
           <CalendarIcon />

@@ -48,7 +48,7 @@ app.get('/sessions/:topicID', verifyToken, sessions.allSessions);
 app.post('/sessions', verifyToken, sessions.newSession);
 
 // PATCH an existing study session
-app.patch('/sessions/:sessionID', sessions.editSession);
+app.patch('/sessions/:sessionID', verifyToken, sessions.editSession);
 
 // DELETE an existing study session
 app.delete('/sessions/:sessionID', verifyToken, sessions.deleteSession);

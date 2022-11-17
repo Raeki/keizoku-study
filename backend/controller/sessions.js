@@ -36,16 +36,19 @@ async function newSession(req, res) {
 
 async function editSession(req, res) {
   try {
-    const { date, time } = req.body;
+    const { date, time, user_id } = req.body;
     const session_id = req.params.sessionID;
 
-    const data = await knex('sessions').where('id', session_id).update(
-      {
-        date,
-        time,
-      },
-      ['id', 'date', 'time']
-    );
+    const data = await knex('sessions')
+      .where('id', session_id)
+      .andWhere('user_id', user_id)
+      .update(
+        {
+          date,
+          time,
+        },
+        ['id', 'date', 'time']
+      );
     console.log(`session: ${session_id} updated to:`);
     console.log(data);
     res.status(200).json(data[0]);
