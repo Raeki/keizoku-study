@@ -1,11 +1,10 @@
 const API_URL = process.env.REACT_APP_API_URL;
-const token = localStorage.getItem('token');
 
 async function getAllTopics() {
   try {
     const rawData = await fetch(`${API_URL}/topics`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
     const data = await rawData.json();
@@ -19,7 +18,7 @@ async function getAllSessions(topicID) {
   try {
     const rawData = await fetch(`${API_URL}/sessions/${topicID}`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
     const data = await rawData.json();

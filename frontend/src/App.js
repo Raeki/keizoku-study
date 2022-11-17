@@ -10,12 +10,6 @@ import Login from './components/Auth/Login';
 // MUI Components
 import Container from '@mui/material/Container';
 
-// temp token for testing
-localStorage.setItem(
-  'token',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJta2VpdGhsZXlAZ21haWwuY29tIiwiaWF0IjoxNjY4NTk3NjcxLCJleHAiOjE2NjkyMDI0NzF9.mK3Ve2pTf7suMJIn__6D3Tj7HE78pIqgghDYmDmT6KA'
-);
-
 export default function App() {
   // useStates
   const [topicID, setTopicID] = useState();
@@ -25,10 +19,10 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate('/login');
+    if (localStorage.getItem('token')) {
+      navigate('/all-topics');
     } else {
-      navigate('all-topics');
+      navigate('/login');
     }
   }, []);
 

@@ -36,7 +36,25 @@ async function postNewSession(minutes, topicID) {
   }
 }
 
+async function postSignin(email, password) {
+  try {
+    const rawData = await fetch(`${API_URL}/signin`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await rawData.json();
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 module.exports = {
   postNewTopic,
   postNewSession,
+  postSignin,
 };
