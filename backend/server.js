@@ -24,7 +24,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-/* Topics API calls */
+/* 
+Topics API calls 
+*/
 
 // GET all topics
 app.get('/topics', verifyToken, topics.allTopics);
@@ -35,7 +37,9 @@ app.post('/topics', verifyToken, topics.newTopic);
 // PATCH topic goal
 app.patch('/topics/:topicID', verifyToken, topics.editGoal);
 
-/* Sessions API calls */
+/* 
+Sessions API calls 
+*/
 
 // GET all study sessions in a topic
 app.get('/sessions/:topicID', verifyToken, sessions.allSessions);
@@ -47,9 +51,11 @@ app.post('/sessions', verifyToken, sessions.newSession);
 app.patch('/sessions/:sessionID', sessions.editSession);
 
 // DELETE an existing study session
-app.delete('/sessions/:sessionID', sessions.deleteSession);
+app.delete('/sessions/:sessionID', verifyToken, sessions.deleteSession);
 
-/* Users API calls */
+/* 
+Users API calls 
+*/
 
 // POST a new user
 app.post('/signup', validateEmail, users.signup);

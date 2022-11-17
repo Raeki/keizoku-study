@@ -58,8 +58,12 @@ async function editSession(req, res) {
 async function deleteSession(req, res) {
   try {
     const session_id = req.params.sessionID;
+    const { user_id } = req.body;
 
-    const data = await knex('sessions').where('id', session_id).del(['id']);
+    const data = await knex('sessions')
+      .where('id', session_id)
+      .andWhere('user_id', user_id)
+      .del(['id']);
     console.log(`session_id: ${data[0].id} deleted`);
     res.status(200).json(data[0]);
   } catch (e) {

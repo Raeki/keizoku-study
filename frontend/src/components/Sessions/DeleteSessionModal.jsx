@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { deleteSession } = require('../../fetch/delete');
 
 // Default MUI styling
 const style = {
@@ -34,16 +34,12 @@ export default function NewSessionModal({ sessionID, sessions, setSessions }) {
     (async () => {
       try {
         setDisabled(true);
-        const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-type': 'application/json',
-          },
-        });
-        let data = await rawData.json();
+        const data = await deleteSession(sessionID);
+        console.log(data);
         const newSessions = [...sessions].filter(obj => {
           return obj.id !== data.id;
         });
+        console.log(newSessions);
         setSessions(newSessions);
         setDisabled(false);
         handleClose();
