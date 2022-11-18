@@ -6,6 +6,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import AllTopics from './components/AllTopics/AllTopics';
 import Topic from './components/Sessions/Sessions';
 import Login from './components/Auth/Login';
+import NavigationBar from './components/Navigation/NavigationBar';
 
 // MUI Components
 import Container from '@mui/material/Container';
@@ -28,6 +29,7 @@ export default function App() {
 
   return (
     <Container>
+      <NavigationBar />
       <Routes>
         <Route
           path='/all-topics'
