@@ -1,6 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-async function deleteSession(sessionID) {
+export async function deleteSession(sessionID) {
   try {
     const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
       method: 'DELETE',
@@ -14,7 +14,3 @@ async function deleteSession(sessionID) {
     console.error(e);
   }
 }
-
-module.exports = {
-  deleteSession,
-};

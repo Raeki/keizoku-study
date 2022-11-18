@@ -1,6 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-async function postNewTopic(name, goal) {
+export async function postNewTopic(name, goal) {
   try {
     const rawData = await fetch(`${API_URL}/topics`, {
       method: 'POST',
@@ -17,7 +17,7 @@ async function postNewTopic(name, goal) {
   }
 }
 
-async function postNewSession(minutes, topicID) {
+export async function postNewSession(minutes, topicID) {
   try {
     const date = new Date();
     const rawData = await fetch(`${API_URL}/sessions`, {
@@ -35,7 +35,7 @@ async function postNewSession(minutes, topicID) {
   }
 }
 
-async function postSignin(email, password) {
+export async function postSignin(email, password) {
   try {
     const rawData = await fetch(`${API_URL}/signin`, {
       method: 'POST',
@@ -51,7 +51,7 @@ async function postSignin(email, password) {
   }
 }
 
-async function postSignup(email, password) {
+export async function postSignup(email, password) {
   try {
     const rawData = await fetch(`${API_URL}/signup`, {
       method: 'POST',
@@ -66,10 +66,3 @@ async function postSignup(email, password) {
     console.error(e);
   }
 }
-
-module.exports = {
-  postNewTopic,
-  postNewSession,
-  postSignin,
-  postSignup,
-};

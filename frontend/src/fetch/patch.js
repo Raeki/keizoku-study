@@ -1,6 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-async function editGoal(goal, topicID) {
+export async function editGoal(goal, topicID) {
   try {
     const rawData = await fetch(`${API_URL}/topics/${topicID}`, {
       method: 'PATCH',
@@ -17,7 +17,7 @@ async function editGoal(goal, topicID) {
   }
 }
 
-async function editSession(newDate, minutes, sessionID) {
+export async function editSession(newDate, minutes, sessionID) {
   try {
     const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
       method: 'PATCH',
@@ -33,8 +33,3 @@ async function editSession(newDate, minutes, sessionID) {
     console.error(e);
   }
 }
-
-module.exports = {
-  editGoal,
-  editSession,
-};
