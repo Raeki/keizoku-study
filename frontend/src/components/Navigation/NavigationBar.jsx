@@ -18,7 +18,9 @@ export default function NavigationBar() {
     navigate('/login');
   }
 
-  function handleCategories() {}
+  function handleCategories() {
+    navigate('/categories');
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
