@@ -10,8 +10,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { getAllTopics } = require('../../fetch/get');
 
 export default function AllTopics({ setTopicID, setTopicName, setTopicGoal }) {
   // useStates
@@ -23,13 +23,8 @@ export default function AllTopics({ setTopicID, setTopicName, setTopicGoal }) {
   // Fetch topics from API
   useEffect(() => {
     (async () => {
-      try {
-        const rawData = await fetch(`${API_URL}/topics`);
-        const data = await rawData.json();
-        setTopics(data);
-      } catch (e) {
-        console.error(e);
-      }
+      const data = await getAllTopics();
+      setTopics(data);
     })();
   }, []);
 

@@ -2,12 +2,20 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const knex = require('./db/knex');
 const cors = require('cors');
 const timeout = require('connect-timeout');
-const PORT = process.env.PORT || 8080;
+
+// controllers
+const users = require('./controller/users');
+const topics = require('./controller/topics');
+const sessions = require('./controller/sessions');
+
+// middleware
+const { validateEmail, validateLoginBody } = require('./middleware/validation');
+const { verifyToken } = require('./middleware/auth');
 
 // Configurations
+const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(timeout('5s'));
 app.use(cors());
@@ -16,122 +24,43 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Topics API calls
+/* 
+Topics API calls 
+*/
 
 // GET all topics
-app.get('/topics', async (req, res) => {
-  try {
-    const data = await knex('topics')
-      .orderBy('name')
-      .select({ id: 'id', name: 'name', goal: 'goal' });
-    res.status(200).json(data);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
+app.get('/topics', verifyToken, topics.allTopics);
 
 // POST new topic
-app.post('/topics', async (req, res) => {
-  try {
-    const { name } = req.body;
-    const data = await knex('topics').returning(['id', 'name']).insert({
-      name,
-    });
-    console.log('new topic: ');
-    console.log(data[0]);
-    res.status(201).json(data[0]);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
+app.post('/topics', verifyToken, topics.newTopic);
 
-// PATCH goal
-app.patch('/topics/:topicID', async (req, res) => {
-  try {
-    const { goal } = req.body;
-    console.log(goal);
-    const data = await knex('topics')
-      .where('id', req.params.topicID)
-      .update({ goal }, ['goal']);
-    console.log(`topic_id: ${req.params.topicID} new goal: ${goal}`);
-    res.status(200).json(data[0]);
-  } catch (e) {
-    console.error(e);
-  }
-});
+// PATCH topic goal
+app.patch('/topics/:topicID', verifyToken, topics.editGoal);
 
-// Session API calls
+/* 
+Sessions API calls 
+*/
 
 // GET all study sessions in a topic
-app.get('/sessions/:topicID', async (req, res) => {
-  const topicID = req.params.topicID;
-  try {
-    const data = await knex('sessions')
-      .where('topic_id', topicID)
-      .select({ id: 'id', date: 'date', time: 'time' });
-    res.status(200).json(data);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
+app.get('/sessions/:topicID', verifyToken, sessions.allSessions);
 
 // POST a new study session
-app.post('/sessions', async (req, res) => {
-  try {
-    const { date, time, topicID } = req.body;
-    const data = await knex('sessions').insert(
-      {
-        date,
-        time,
-        topic_id: topicID,
-      },
-      ['date', 'time', 'id']
-    );
-    res.status(201).json(data[0]);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
-
-// DELETE an existing study session
-app.delete('/sessions/:sessionID', async (req, res) => {
-  try {
-    const session_id = req.params.sessionID;
-
-    const data = await knex('sessions').where('id', session_id).del(['id']);
-    console.log(`session_id: ${data[0].id} deleted`);
-    res.status(200).json(data[0]);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
+app.post('/sessions', verifyToken, sessions.newSession);
 
 // PATCH an existing study session
-app.patch('/sessions/:sessionID', async (req, res) => {
-  try {
-    const { date, time } = req.body;
-    const session_id = req.params.sessionID;
+app.patch('/sessions/:sessionID', verifyToken, sessions.editSession);
 
-    const data = await knex('sessions').where('id', session_id).update(
-      {
-        date,
-        time,
-      },
-      ['id', 'date', 'time']
-    );
-    console.log(`session: ${session_id} updated to:`);
-    console.log(data);
-    res.status(200).json(data[0]);
-  } catch (e) {
-    console.error(e);
-    res.status(500);
-  }
-});
+// DELETE an existing study session
+app.delete('/sessions/:sessionID', verifyToken, sessions.deleteSession);
+
+/* 
+Users API calls 
+*/
+
+// POST a new user
+app.post('/signup', validateEmail, users.signup);
+// POST a login request
+app.post('/signin', validateLoginBody, users.signin);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

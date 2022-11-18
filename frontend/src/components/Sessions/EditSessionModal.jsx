@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { editSession } = require('../../fetch/patch');
 
 // Default MUI styling
 const style = {
@@ -51,19 +51,8 @@ export default function NewSessionModal({
   function handleSubmit() {
     (async () => {
       setDisabled(true);
-      const body = {
-        date: newDate,
-        time: Number.parseInt(minutes),
-      };
       try {
-        const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        });
-        let data = await rawData.json();
+        const data = await editSession(newDate, minutes, sessionID);
         const newSessions = [...sessions];
         newSessions[0] = data;
         setSessions(newSessions);

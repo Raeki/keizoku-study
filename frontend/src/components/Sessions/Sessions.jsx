@@ -17,13 +17,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CalendarIcon from '@mui/icons-material/CalendarTodayTwoTone';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { getAllSessions } = require('../../fetch/get');
 
-// List item definition
+// List item definition TURN INTO A COMPONENT
 function Item({ date, time, sessionID, sessions, setSessions }) {
   return (
-    <ListItem disablePadding>
+    <ListItem disablePadding key={sessionID}>
       <ListItemButton>
         <ListItemIcon>
           <CalendarIcon />
@@ -69,8 +69,7 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
   useEffect(() => {
     (async () => {
       try {
-        const rawData = await fetch(`${API_URL}/sessions/${topicID}`);
-        const data = await rawData.json();
+        const data = await getAllSessions(topicID);
         setSessions(data);
       } catch (e) {
         console.error(e);

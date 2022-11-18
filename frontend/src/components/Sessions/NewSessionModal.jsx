@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
-// API URL import
-const API_URL = process.env.REACT_APP_API_URL;
+// API fetch import
+const { postNewSession } = require('../../fetch/post');
 
 // Default MUI styling
 const style = {
@@ -38,24 +38,10 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
 
   // submit API call
   function handleSubmit() {
-    let date = new Date();
-    // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     (async () => {
       setDisabled(true);
-      const body = {
-        date,
-        time: Number.parseInt(minutes),
-        topicID,
-      };
       try {
-        const rawData = await fetch(`${API_URL}/sessions`, {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        });
-        const data = await rawData.json();
+        const data = await postNewSession(minutes, topicID);
         setSessions([data, ...sessions]);
         setDisabled(false);
         handleClose();
