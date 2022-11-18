@@ -24,7 +24,7 @@ export default function App() {
     } else {
       navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>
