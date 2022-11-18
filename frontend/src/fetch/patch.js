@@ -1,12 +1,11 @@
 const API_URL = process.env.REACT_APP_API_URL;
-const token = localStorage.getItem('token');
 
 async function editGoal(goal, topicID) {
   try {
     const rawData = await fetch(`${API_URL}/topics/${topicID}`, {
       method: 'PATCH',
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-type': 'application/json',
       },
       body: JSON.stringify({ goal }),
@@ -23,7 +22,7 @@ async function editSession(newDate, minutes, sessionID) {
     const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
       method: 'PATCH',
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-type': 'application/json',
       },
       body: JSON.stringify({ date: newDate, time: minutes }),

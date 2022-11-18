@@ -2,10 +2,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Components
+import SignupModal from './SignupModal';
+
 // MUI imports
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 // API fetch import
 const { postSignin } = require('../../fetch/post');
@@ -44,26 +48,39 @@ export default function Login() {
       noValidate
       autoComplete='off'
     >
-      <div>
-        <TextField
-          required
-          id='outlined-required'
-          label='Email'
-          value={email}
-          onChange={handleEmail}
-        />
-        <TextField
-          required
-          id='outlined-required'
-          label='Password'
-          type='password'
-          value={password}
-          onChange={handlePassword}
-        />
-      </div>
-      <Button variant='contained' onClick={handleSignin}>
-        Login
-      </Button>
+      <Grid container spacing={2}>
+        <Grid item md={12}>
+          <div>
+            <TextField
+              required
+              id='outlined-required'
+              label='Email'
+              value={email}
+              onChange={handleEmail}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              label='Password'
+              type='password'
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
+        </Grid>
+        <Grid item md={6}>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Button variant='contained' onClick={handleSignin}>
+                Login
+              </Button>
+            </Grid>
+            <Grid item>
+              <SignupModal />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
