@@ -1,6 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-async function getAllTopics() {
+export async function getAllTopics() {
   try {
     const rawData = await fetch(`${API_URL}/topics`, {
       headers: {
@@ -14,7 +14,7 @@ async function getAllTopics() {
   }
 }
 
-async function getAllSessions(topicID) {
+export async function getAllSessions(topicID) {
   try {
     const rawData = await fetch(`${API_URL}/sessions/${topicID}`, {
       headers: {
@@ -28,8 +28,3 @@ async function getAllSessions(topicID) {
     console.error(e);
   }
 }
-
-module.exports = {
-  getAllTopics,
-  getAllSessions,
-};
