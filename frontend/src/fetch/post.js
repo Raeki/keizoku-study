@@ -17,7 +17,7 @@ export async function postNewCategory(name, goal) {
   }
 }
 
-export async function postNewTopic(name, goal) {
+export async function postNewTopic(name, goal, categoryID) {
   try {
     const rawData = await fetch(`${API_URL}/topics`, {
       method: 'POST',
@@ -25,7 +25,7 @@ export async function postNewTopic(name, goal) {
         authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ name, goal }),
+      body: JSON.stringify({ name, goal, categoryID }),
     });
     const data = await rawData.json();
     return data;

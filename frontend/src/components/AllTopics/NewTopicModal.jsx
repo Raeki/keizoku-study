@@ -23,7 +23,7 @@ const style = {
   p: 4,
 };
 
-export default function NewTopicModal({ topics, setTopics }) {
+export default function NewTopicModal({ topics, setTopics, categoryID }) {
   // Modal states
   const [open, setOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -45,10 +45,14 @@ export default function NewTopicModal({ topics, setTopics }) {
     (async () => {
       try {
         setDisabled(true);
-        const data = await postNewTopic(name, goal);
-        setTopics([...topics, data]);
-        setDisabled(false);
-        setName('');
+
+        categoryID = categoryID || localStorage.getItem('categoryID');
+        if (categoryID) {
+          const data = await postNewTopic(name, goal, categoryID);
+          setTopics([...topics, data]);
+          setDisabled(false);
+          setName('');
+        }
         handleClose();
       } catch (e) {
         console.error(e);

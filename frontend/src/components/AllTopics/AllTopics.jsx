@@ -57,7 +57,11 @@ export default function AllTopics({
           );
         })}
       </Grid>
-      <NewTopicModal topics={topics} setTopics={setTopics} />
+      <NewTopicModal
+        topics={topics}
+        setTopics={setTopics}
+        categoryID={categoryID}
+      />
     </Container>
   );
 }
