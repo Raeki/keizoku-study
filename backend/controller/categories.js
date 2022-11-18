@@ -1,14 +1,13 @@
 const knex = require('../db/knex');
 
-async function allTopics(req, res) {
+async function allCategories(req, res) {
   try {
     const { user_id } = req.body;
-    const category_id = req.params.category_id;
-    const data = await knex('topics')
+    const data = await knex('categories')
       .orderBy('name')
       .select({ id: 'id', name: 'name', goal: 'goal' })
-      .where('user_id', user_id)
-      .andWhere('category_id', category_id);
+      .where('user_id', user_id);
+    console.log(data);
     res.status(200).json(data);
   } catch (e) {
     console.error(e);
@@ -16,10 +15,10 @@ async function allTopics(req, res) {
   }
 }
 
-async function newTopic(req, res) {
+async function newCategory(req, res) {
   try {
     const { user_id, name, goal } = req.body;
-    const data = await knex('topics').insert(
+    const data = await knex('categories').insert(
       {
         name,
         goal,
@@ -36,12 +35,12 @@ async function newTopic(req, res) {
   }
 }
 
-async function editGoal(req, res) {
+async function editCategoryGoal(req, res) {
   try {
     const { user_id, goal } = req.body;
     console.log(goal);
-    const data = await knex('topics')
-      .where('id', req.params.topicID)
+    const data = await knex('categories')
+      .where('id', req.params.categoryID)
       .andWhere('user_id', user_id)
       .update({ goal }, ['id', 'goal']);
     console.log(`topic_id: ${data[0].id} new goal: ${data[0].goal}`);
@@ -52,7 +51,7 @@ async function editGoal(req, res) {
 }
 
 module.exports = {
-  allTopics,
-  newTopic,
-  editGoal,
+  allCategories,
+  newCategory,
+  editCategoryGoal,
 };

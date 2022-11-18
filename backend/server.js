@@ -6,9 +6,10 @@ const cors = require('cors');
 const timeout = require('connect-timeout');
 
 // controllers
-const users = require('./controller/users');
+const categories = require('./controller/categories');
 const topics = require('./controller/topics');
 const sessions = require('./controller/sessions');
+const users = require('./controller/users');
 
 // middleware
 const { validateEmail, validateLoginBody } = require('./middleware/validation');
@@ -25,11 +26,21 @@ app.get('/', (req, res) => {
 });
 
 /* 
+Categories API calls 
+*/
+
+// GET all categories
+app.get('/categories', verifyToken, categories.allCategories);
+
+// POST new category
+app.post('/categories', verifyToken, categories.newCategory);
+
+/* 
 Topics API calls 
 */
 
 // GET all topics
-app.get('/topics', verifyToken, topics.allTopics);
+app.get('/topics/:category_id', verifyToken, topics.allTopics);
 
 // POST new topic
 app.post('/topics', verifyToken, topics.newTopic);

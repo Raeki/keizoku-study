@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 // Components
 import AllTopics from './components/AllTopics/AllTopics';
+import Categories from './components/Categories/Categories';
 import Topic from './components/Sessions/Sessions';
 import Login from './components/Auth/Login';
 import NavigationBar from './components/Navigation/NavigationBar';
@@ -16,13 +17,14 @@ export default function App() {
   const [topicID, setTopicID] = useState();
   const [topicName, setTopicName] = useState();
   const [topicGoal, setTopicGoal] = useState();
+  const [categoryID, setCategoryID] = useState();
+  const [categoryName, setCategoryName] = useState();
+  const [categoryGoal, setCategoryGoal] = useState();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      navigate('/all-topics');
-    } else {
+    if (!localStorage.getItem('token')) {
       navigate('/login');
     }
   }, [navigate]);
@@ -32,9 +34,20 @@ export default function App() {
       <NavigationBar />
       <Routes>
         <Route
+          path='/categories'
+          element={
+            <Categories
+              setCategoryID={setCategoryID}
+              setCategoryName={setCategoryName}
+              setCategoryGoal={setCategoryGoal}
+            />
+          }
+        />
+        <Route
           path='/all-topics'
           element={
             <AllTopics
+              categoryID={categoryID}
               setTopicID={setTopicID}
               setTopicName={setTopicName}
               setTopicGoal={setTopicGoal}

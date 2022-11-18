@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Component imports
-import NewTopicModal from './NewTopicModal';
+import NewCategoryModal from './NewCategoryModal';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -11,16 +11,15 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
 // API fetch import
-const { getAllTopics } = require('../../fetch/get');
+const { getAllCategories } = require('../../fetch/get');
 
-export default function AllTopics({
-  setTopicID,
-  setTopicName,
-  setTopicGoal,
-  categoryID,
+export default function Categories({
+  setCategoryID,
+  setCategoryName,
+  setCategoryGoal,
 }) {
   // useStates
-  const [topics, setTopics] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   // react-router-dom navigator
   const navigate = useNavigate();
@@ -28,24 +27,24 @@ export default function AllTopics({
   // Fetch topics from API
   useEffect(() => {
     (async () => {
-      const data = await getAllTopics(categoryID);
-      setTopics(data);
+      const data = await getAllCategories();
+      setCategories(data);
     })();
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>
       <Grid container spacing={1}>
-        {topics.map(obj => {
+        {categories.map(obj => {
           return (
             <Grid item m key={obj.id}>
               <Button
                 variant='contained'
                 onClick={() => {
-                  setTopicID(obj.id);
-                  setTopicName(obj.name);
-                  setTopicGoal(obj.goal);
-                  navigate('/topic');
+                  setCategoryID(obj.id);
+                  setCategoryName(obj.name);
+                  setCategoryGoal(obj.goal);
+                  navigate('/all-topics');
                 }}
               >
                 {obj.name}
@@ -54,7 +53,7 @@ export default function AllTopics({
           );
         })}
       </Grid>
-      <NewTopicModal topics={topics} setTopics={setTopics} />
+      <NewCategoryModal topics={categories} setTopics={setCategories} />
     </Container>
   );
 }
