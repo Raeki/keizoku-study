@@ -18,10 +18,12 @@ export default function Login() {
   // Login form states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState();
   const handleEmail = e => {
     setEmail(e.target.value);
   };
   const handlePassword = e => {
+    setPasswordError(false);
     setPassword(e.target.value);
   };
 
@@ -30,7 +32,11 @@ export default function Login() {
   async function handleSignin() {
     try {
       const data = await postSignin(email, password);
-      localStorage.setItem('token', data.token);
+      if (data) {
+        localStorage.setItem('token', data.token);
+      } else {
+        setPasswordError(true);
+      }
       if (localStorage.getItem('token')) {
         navigate('/all-topics');
       }
@@ -60,6 +66,7 @@ export default function Login() {
             />
             <TextField
               required
+              error={passwordError}
               id='outlined-required'
               label='Password'
               type='password'
