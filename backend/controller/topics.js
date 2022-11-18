@@ -4,7 +4,6 @@ async function allTopics(req, res) {
   try {
     const { user_id } = req.body;
     const category_id = req.params.category_id;
-    console.log(user_id, category_id);
     const data = await knex('topics')
       .orderBy('name')
       .select({ id: 'id', name: 'name', goal: 'goal' })
@@ -19,12 +18,13 @@ async function allTopics(req, res) {
 
 async function newTopic(req, res) {
   try {
-    const { user_id, name, goal } = req.body;
+    const { user_id, name, goal, categoryID } = req.body;
     const data = await knex('topics').insert(
       {
         name,
         goal,
         user_id,
+        category_id: categoryID,
       },
       ['id', 'name', 'goal']
     );

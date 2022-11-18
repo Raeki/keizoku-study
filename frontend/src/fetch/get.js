@@ -22,7 +22,6 @@ export async function getAllTopics(categoryID) {
       },
     });
     const data = await rawData.json();
-    console.log(data);
     return data;
   } catch (e) {
     console.error(e);

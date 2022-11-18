@@ -6,6 +6,7 @@ import NewSessionModal from './NewSessionModal';
 import EditSessionModal from './EditSessionModal';
 import DeleteSessionModal from './DeleteSessionModal';
 import EditGoalModal from './EditGoalModal';
+import SessionsDashboard from './SessionsDashboard';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -101,39 +102,21 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
 
   return (
     <Container>
-      <Box sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
+      <Box
+        sx={{
+          width: '100%',
+          minWidth: 250,
+          maxWidth: 400,
+          bgcolor: 'background.paper',
+        }}
+      >
         <nav aria-label='sessions'>
           <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <CalendarIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <NewSessionModal
-                      sessions={sessions}
-                      setSessions={setSessions}
-                      topicID={topicID}
-                    />
-                  }
-                />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary={`Min/Day: ${getAvgMinutes(sessions)}`} />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText
-                  primary={
-                    <EditGoalModal
-                      topicID={topicID}
-                      goal={`mins/day: ${topicGoal}`}
-                      setTopicGoal={setTopicGoal}
-                    />
-                  }
-                />
-              </ListItemButton>
-            </ListItem>
+            <SessionsDashboard
+              topicID={topicID}
+              topicGoal={topicGoal}
+              setTopicGoal={setTopicGoal}
+            />
             {sessions
               .sort((a, b) => {
                 return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -141,6 +124,7 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
               .map(obj => {
                 return (
                   <Item
+                    key={obj.id}
                     date={obj.date}
                     time={obj.time}
                     sessionID={obj.id}

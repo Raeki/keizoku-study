@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
-export default function NavigationBar() {
+export default function NavigationBar({ categoryName, setCategoryName }) {
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -18,7 +18,8 @@ export default function NavigationBar() {
     navigate('/login');
   }
 
-  function handleCategories() {
+  function handleTop() {
+    setCategoryName('');
     navigate('/categories');
   }
   return (
@@ -26,8 +27,11 @@ export default function NavigationBar() {
       <AppBar position='static'>
         <Toolbar>
           <Container>
-            <Button color='inherit' onClick={handleCategories}>
-              <Typography variant='h6'>Categories</Typography>
+            <Button color='inherit' onClick={handleTop}>
+              <Typography variant='h6'>Top</Typography>
+            </Button>
+            <Button color='inherit' onClick={handleTop}>
+              <Typography variant='h6'>{categoryName}</Typography>
             </Button>
           </Container>
           <Button color='inherit' onClick={handleLogout}>

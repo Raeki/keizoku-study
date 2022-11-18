@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Component imports
 import NewTopicModal from './NewTopicModal';
+import Sessions from '../Sessions/Sessions';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -41,7 +42,7 @@ export default function AllTopics({
       <Grid container spacing={1}>
         {topics.map(obj => {
           return (
-            <Grid item m key={obj.id}>
+            <Grid item md={5} key={obj.id}>
               <Button
                 variant='contained'
                 onClick={() => {
@@ -53,11 +54,20 @@ export default function AllTopics({
               >
                 {obj.name}
               </Button>
+              <Sessions
+                topicID={obj.id}
+                topicGoal={obj.goal}
+                setTopicGoal={setTopicGoal}
+              />
             </Grid>
           );
         })}
       </Grid>
-      <NewTopicModal topics={topics} setTopics={setTopics} />
+      <NewTopicModal
+        topics={topics}
+        setTopics={setTopics}
+        categoryID={categoryID}
+      />
     </Container>
   );
 }

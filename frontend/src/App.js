@@ -31,7 +31,10 @@ export default function App() {
 
   return (
     <Container>
-      <NavigationBar />
+      <NavigationBar
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
+      />
       <Routes>
         <Route
           path='/categories'
