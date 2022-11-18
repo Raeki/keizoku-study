@@ -42,6 +42,7 @@ export default function Categories({
                 variant='contained'
                 onClick={() => {
                   setCategoryID(obj.id);
+                  localStorage.setItem('categoryID', obj.id);
                   setCategoryName(obj.name);
                   setCategoryGoal(obj.goal);
                   navigate('/all-topics');

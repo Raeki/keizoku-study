@@ -28,8 +28,11 @@ export default function AllTopics({
   // Fetch topics from API
   useEffect(() => {
     (async () => {
-      const data = await getAllTopics(categoryID);
-      setTopics(data);
+      const id = categoryID || localStorage.getItem('categoryID');
+      if (id) {
+        const data = await getAllTopics(id);
+        setTopics(data);
+      }
     })();
   }, []);
 
