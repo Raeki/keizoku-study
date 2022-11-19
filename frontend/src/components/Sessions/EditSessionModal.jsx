@@ -61,10 +61,8 @@ export default function NewSessionModal({
     (async () => {
       setDisabled(true);
       try {
-        const data = await editSession(newDate, minutes, sessionID);
-        const newSessions = [...sessions];
-        newSessions[0] = data;
-        setSessions(newSessions);
+        await editSession(newDate, minutes, sessionID);
+        setSessions([]);
         setDisabled(false);
         handleClose();
       } catch (e) {

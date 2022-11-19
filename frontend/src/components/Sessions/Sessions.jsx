@@ -37,7 +37,7 @@ export default function Sessions({
         console.error(e);
       }
     })();
-  }, [setSessions]);
+  }, [setSessions, sessions]);
 
   return (
     <Box
