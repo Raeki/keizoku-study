@@ -19,7 +19,7 @@ export default function NavigationBar({
   const navigate = useNavigate();
 
   function handleLogout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     setCategoryName('');
     setTopicName('');
     navigate('/login');
