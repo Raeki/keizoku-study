@@ -35,11 +35,9 @@ export default function NewSessionModal({ sessionID, sessions, setSessions }) {
       try {
         setDisabled(true);
         const data = await deleteSession(sessionID);
-        console.log(data);
         const newSessions = [...sessions].filter(obj => {
           return obj.id !== data.id;
         });
-        console.log(newSessions);
         setSessions(newSessions);
         setDisabled(false);
         handleClose();

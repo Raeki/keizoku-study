@@ -25,6 +25,7 @@ const style = {
 
 export default function NewSessionModal({
   sessionID,
+  time,
   date,
   sessions,
   setSessions,
@@ -36,7 +37,7 @@ export default function NewSessionModal({
   const handleClose = () => setOpen(false);
 
   // Form states
-  const [minutes, setMinutes] = useState('');
+  const [minutes, setMinutes] = useState(String(time));
   const [newDate, setNewDate] = useState(date);
 
   // State handlers

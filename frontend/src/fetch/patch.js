@@ -19,6 +19,7 @@ export async function editGoal(goal, topicID) {
 
 export async function editSession(newDate, minutes, sessionID) {
   try {
+    console.log(newDate, minutes, sessionID);
     const rawData = await fetch(`${API_URL}/sessions/${sessionID}`, {
       method: 'PATCH',
       headers: {

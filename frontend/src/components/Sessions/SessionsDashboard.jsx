@@ -28,12 +28,18 @@ export default function SessionsDashboard({
   // Avg Minutes Logic
   function getAvgMinutes(sessions) {
     if (sessions.length) {
-      const max = Math.max(
-        ...sessions.map(obj => new Date(obj.date).valueOf())
-      );
-      const min = Math.min(
-        ...sessions.map(obj => new Date(obj.date).valueOf())
-      );
+      const max =
+        Math.max(...sessions.map(obj => new Date(obj.date).valueOf())) /
+        1000 /
+        60 /
+        60 /
+        24;
+      const min =
+        Math.min(...sessions.map(obj => new Date(obj.date).valueOf())) /
+        1000 /
+        60 /
+        60 /
+        24;
       const minutes = sessions
         .map(obj => {
           return obj.time;
@@ -41,9 +47,9 @@ export default function SessionsDashboard({
         .reduce((a, b) => {
           return a + b;
         });
-      let days = Math.ceil((max - min) / 1000 / 60 / 60 / 24);
-      days = days === 0 ? 1 : days;
-      const average = minutes / days;
+
+      let days = Math.ceil(max - min) + 1;
+      const average = (minutes / days).toFixed(2);
       return average;
     }
   }

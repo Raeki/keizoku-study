@@ -28,7 +28,7 @@ export default function SessionItem({
   }
 
   return (
-    <ListItem disablePadding key={sessionID}>
+    <ListItem disablePadding>
       <ListItemButton>
         <ListItemText primary={makeInfo(date, time)} />
       </ListItemButton>
@@ -37,6 +37,7 @@ export default function SessionItem({
           primary={
             <EditSessionModal
               sessionID={sessionID}
+              time={time}
               date={date}
               sessions={sessions}
               setSessions={setSessions}
