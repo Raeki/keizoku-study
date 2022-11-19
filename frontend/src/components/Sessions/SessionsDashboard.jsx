@@ -61,9 +61,6 @@ export default function SessionsDashboard({
   return (
     <ListItem disablePadding>
       <ListItemButton>
-        <ListItemIcon>
-          <CalendarIcon />
-        </ListItemIcon>
         <ListItemText
           primary={
             <NewSessionModal

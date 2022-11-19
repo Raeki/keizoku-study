@@ -38,11 +38,11 @@ export default function AllTopics({
   }, []);
 
   return (
-    <Container>
+    <>
       <Grid container spacing={1}>
         {topics.map(obj => {
           return (
-            <Grid item md={5} key={obj.id}>
+            <Grid item md={4} key={obj.id}>
               <Button
                 variant='contained'
                 onClick={() => {
@@ -68,6 +68,6 @@ export default function AllTopics({
         setTopics={setTopics}
         categoryID={categoryID}
       />
-    </Container>
+    </>
   );
 }

@@ -8,9 +8,7 @@ import DeleteSessionModal from './DeleteSessionModal';
 // MUI
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CalendarIcon from '@mui/icons-material/CalendarTodayTwoTone';
 
 // List item definition TURN INTO A COMPONENT
 export default function SessionItem({
@@ -23,9 +21,6 @@ export default function SessionItem({
   return (
     <ListItem disablePadding key={sessionID}>
       <ListItemButton>
-        <ListItemIcon>
-          <CalendarIcon />
-        </ListItemIcon>
         <ListItemText
           primary={`${new Date(date)
             .toString()
