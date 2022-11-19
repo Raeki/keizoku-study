@@ -27,11 +27,13 @@ export default function NavigationBar({
 
   function handleTop() {
     setCategoryName('');
+    localStorage.removeItem('categoryName');
     navigate('/categories');
   }
 
   function handleCategory() {
     setTopicName('');
+    localStorage.removeItem('topicName');
     navigate('/all-topics');
   }
   return (
@@ -43,10 +45,14 @@ export default function NavigationBar({
               <Typography variant='h6'>Top</Typography>
             </Button>
             <Button color='inherit' onClick={handleCategory}>
-              <Typography variant='h6'>{categoryName}</Typography>
+              <Typography variant='h6'>
+                {categoryName || localStorage.getItem('categoryName')}
+              </Typography>
             </Button>
             <Button color='inherit' onClick={handleCategory}>
-              <Typography variant='h6'>{topicName}</Typography>
+              <Typography variant='h6'>
+                {topicName || localStorage.getItem('topicName')}
+              </Typography>
             </Button>
           </Container>
           <Button color='inherit' onClick={handleLogout}>

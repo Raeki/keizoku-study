@@ -38,7 +38,7 @@ export default function Login() {
         setPasswordError(true);
       }
       if (localStorage.getItem('token')) {
-        navigate('/all-topics');
+        navigate('/categories');
       }
     } catch (e) {
       console.error(e);

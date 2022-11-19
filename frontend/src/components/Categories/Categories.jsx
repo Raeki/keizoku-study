@@ -44,6 +44,7 @@ export default function Categories({
                   setCategoryID(obj.id);
                   localStorage.setItem('categoryID', obj.id);
                   setCategoryName(obj.name);
+                  localStorage.setItem('categoryName', obj.name);
                   setCategoryGoal(obj.goal);
                   navigate('/all-topics');
                 }}
