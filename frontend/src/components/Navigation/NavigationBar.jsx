@@ -20,6 +20,8 @@ export default function NavigationBar({
 
   function handleLogout() {
     localStorage.removeItem('token');
+    setCategoryName('');
+    setTopicName('');
     navigate('/login');
   }
 
