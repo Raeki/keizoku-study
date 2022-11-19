@@ -1,6 +1,9 @@
 // Dependencies
 import React, { useState } from 'react';
 
+// Components
+import GoalBar from './GoalBar';
+
 // MUI imports
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,7 +26,12 @@ const style = {
   p: 4,
 };
 
-export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
+export default function NewSessionModal({
+  topicID,
+  setTopicGoal,
+  goal,
+  avgMinutes,
+}) {
   // Modal states
   const [open, setOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -31,7 +39,7 @@ export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
   const handleClose = () => setOpen(false);
 
   // Form states
-  const [minutes, setMinutes] = useState('');
+  const [minutes, setMinutes] = useState(String(goal));
 
   // State handlers
   const handleMinutes = e => {
@@ -55,7 +63,9 @@ export default function NewSessionModal({ topicID, setTopicGoal, goal }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>{`Goal: ${goal}`}</Button>
+      <Button sx={{ width: '100%' }} onClick={handleOpen}>
+        <GoalBar avgMinutes={avgMinutes} goal={goal} />
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

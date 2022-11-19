@@ -11,6 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
 
 // API fetch import
 const { getAllSessions } = require('../../fetch/get');
@@ -57,21 +58,31 @@ export default function SessionsDashboard({
   const navigate = useNavigate();
 
   return (
-    <>
-      <Button
-        variant='contained'
-        onClick={() => {
-          setTopicID(topicID);
-          localStorage.setItem('topicID', topicID);
-          setTopicName(topicName);
-          localStorage.setItem('topicName', topicName);
-          setTopicGoal(topicGoal);
-          localStorage.setItem('topicGoal', topicGoal);
-          navigate('/topic');
-        }}
-      >
-        {topicName}
-      </Button>
+    <Grid container>
+      <Grid item md={12}>
+        <Button
+          variant='contained'
+          onClick={() => {
+            setTopicID(topicID);
+            localStorage.setItem('topicID', topicID);
+            setTopicName(topicName);
+            localStorage.setItem('topicName', topicName);
+            setTopicGoal(topicGoal);
+            localStorage.setItem('topicGoal', topicGoal);
+            navigate('/topic');
+          }}
+        >
+          {topicName}
+        </Button>
+      </Grid>
+      <Grid item md={12}>
+        <EditGoalModal
+          topicID={topicID}
+          goal={topicGoal}
+          setTopicGoal={setTopicGoal}
+          avgMinutes={getAvgMinutes(sessions)}
+        />
+      </Grid>
       <ListItem disablePadding>
         <ListItemButton>
           <ListItemText
@@ -84,21 +95,7 @@ export default function SessionsDashboard({
             }
           />
         </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary={`Min/Day: ${getAvgMinutes(sessions)}`} />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemText
-            primary={
-              <EditGoalModal
-                topicID={topicID}
-                goal={`mins/day: ${topicGoal}`}
-                setTopicGoal={setTopicGoal}
-              />
-            }
-          />
-        </ListItemButton>
       </ListItem>
-    </>
+    </Grid>
   );
 }
