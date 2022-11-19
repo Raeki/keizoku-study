@@ -25,6 +25,7 @@ export default function App() {
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
+      localStorage.clear();
       navigate('/login');
     }
   }, [navigate]);
