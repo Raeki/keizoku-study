@@ -65,6 +65,9 @@ export default function Sessions({
             .sort((a, b) => {
               return b.id - a.id;
             })
+            .sort((a, b) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            })
             .slice(0, limit)
             .map(obj => {
               return (

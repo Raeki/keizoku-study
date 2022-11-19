@@ -10,7 +10,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-// List item definition TURN INTO A COMPONENT
 export default function SessionItem({
   date,
   time,
