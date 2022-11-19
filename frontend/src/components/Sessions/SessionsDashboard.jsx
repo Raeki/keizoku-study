@@ -1,23 +1,25 @@
 // Dependencies
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Components
 import NewSessionModal from './NewSessionModal';
 import EditGoalModal from './EditGoalModal';
 
 // MUI
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CalendarIcon from '@mui/icons-material/CalendarTodayTwoTone';
+import Button from '@mui/material/Button';
 
 // API fetch import
 const { getAllSessions } = require('../../fetch/get');
 
 export default function SessionsDashboard({
   topicID,
+  setTopicID,
+  topicName,
+  setTopicName,
   topicGoal,
   setTopicGoal,
 }) {
@@ -36,6 +38,7 @@ export default function SessionsDashboard({
     })();
   }, [topicID]);
 
+  // Avg Minutes Logic
   function getAvgMinutes(sessions) {
     if (sessions.length) {
       const max = Math.max(
@@ -58,33 +61,49 @@ export default function SessionsDashboard({
     }
   }
 
+  const navigate = useNavigate();
+
   return (
-    <ListItem disablePadding>
-      <ListItemButton>
-        <ListItemText
-          primary={
-            <NewSessionModal
-              sessions={sessions}
-              setSessions={setSessions}
-              topicID={topicID}
-            />
-          }
-        />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary={`Min/Day: ${getAvgMinutes(sessions)}`} />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText
-          primary={
-            <EditGoalModal
-              topicID={topicID}
-              goal={`mins/day: ${topicGoal}`}
-              setTopicGoal={setTopicGoal}
-            />
-          }
-        />
-      </ListItemButton>
-    </ListItem>
+    <>
+      <Button
+        variant='contained'
+        onClick={() => {
+          setTopicID(topicID);
+          localStorage.setItem('topicID', topicID);
+          setTopicName(topicName);
+          setTopicGoal(topicGoal);
+          navigate('/topic');
+        }}
+      >
+        {topicName}
+      </Button>
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemText
+            primary={
+              <NewSessionModal
+                sessions={sessions}
+                setSessions={setSessions}
+                topicID={topicID}
+              />
+            }
+          />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemText primary={`Min/Day: ${getAvgMinutes(sessions)}`} />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemText
+            primary={
+              <EditGoalModal
+                topicID={topicID}
+                goal={`mins/day: ${topicGoal}`}
+                setTopicGoal={setTopicGoal}
+              />
+            }
+          />
+        </ListItemButton>
+      </ListItem>
+    </>
   );
 }

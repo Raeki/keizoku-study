@@ -34,6 +34,8 @@ export default function App() {
       <NavigationBar
         categoryName={categoryName}
         setCategoryName={setCategoryName}
+        topicName={topicName}
+        setTopicName={setTopicName}
       />
       <Routes>
         <Route

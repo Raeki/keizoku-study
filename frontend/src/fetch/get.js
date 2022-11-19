@@ -30,13 +30,15 @@ export async function getAllTopics(categoryID) {
 
 export async function getAllSessions(topicID) {
   try {
-    const rawData = await fetch(`${API_URL}/sessions/${topicID}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    const data = await rawData.json();
-    return data;
+    if (topicID) {
+      const rawData = await fetch(`${API_URL}/sessions/${topicID}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      const data = await rawData.json();
+      return data;
+    }
   } catch (e) {
     console.error(e);
   }

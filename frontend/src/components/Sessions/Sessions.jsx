@@ -6,14 +6,20 @@ import SessionsDashboard from './SessionsDashboard';
 import SessionItem from './SessionItem';
 
 // MUI
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 
 // API fetch import
 const { getAllSessions } = require('../../fetch/get');
 
-export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
+export default function Sessions({
+  topicID,
+  setTopicID,
+  topicGoal,
+  setTopicGoal,
+  topicName,
+  setTopicName,
+}) {
   // useStates
   const [sessions, setSessions] = useState([]);
 
@@ -21,13 +27,16 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
   useEffect(() => {
     (async () => {
       try {
-        const data = await getAllSessions(topicID);
-        setSessions(data);
+        const id = topicID || localStorage.getItem('topicID');
+        if (typeof id === 'number') {
+          const data = await getAllSessions(id);
+          setSessions(data);
+        }
       } catch (e) {
         console.error(e);
       }
     })();
-  }, [topicID, sessions]);
+  }, [setSessions]);
 
   return (
     <Box
@@ -43,6 +52,9 @@ export default function Sessions({ topicID, topicGoal, setTopicGoal }) {
         <List>
           <SessionsDashboard
             topicID={topicID}
+            setTopicID={setTopicID}
+            topicName={topicName}
+            setTopicName={setTopicName}
             topicGoal={topicGoal}
             setTopicGoal={setTopicGoal}
           />

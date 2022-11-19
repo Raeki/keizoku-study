@@ -7,9 +7,7 @@ import NewTopicModal from './NewTopicModal';
 import Sessions from '../Sessions/Sessions';
 
 // MUI
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 
 // API fetch import
 const { getAllTopics } = require('../../fetch/get');
@@ -43,19 +41,11 @@ export default function AllTopics({
         {topics.map(obj => {
           return (
             <Grid item md={4} key={obj.id}>
-              <Button
-                variant='contained'
-                onClick={() => {
-                  setTopicID(obj.id);
-                  setTopicName(obj.name);
-                  setTopicGoal(obj.goal);
-                  navigate('/topic');
-                }}
-              >
-                {obj.name}
-              </Button>
               <Sessions
                 topicID={obj.id}
+                setTopicID={setTopicID}
+                topicName={obj.name}
+                setTopicName={setTopicName}
                 topicGoal={obj.goal}
                 setTopicGoal={setTopicGoal}
               />
