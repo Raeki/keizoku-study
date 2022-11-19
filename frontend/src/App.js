@@ -64,7 +64,9 @@ export default function App() {
           element={
             <Topic
               topicID={topicID}
+              setTopicID={setTopicID}
               topicName={topicName}
+              setTopicName={setTopicName}
               topicGoal={topicGoal}
               setTopicGoal={setTopicGoal}
             />
