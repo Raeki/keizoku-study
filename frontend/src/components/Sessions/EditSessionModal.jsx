@@ -25,6 +25,7 @@ const style = {
 
 export default function NewSessionModal({
   sessionID,
+  time,
   date,
   sessions,
   setSessions,
@@ -36,8 +37,8 @@ export default function NewSessionModal({
   const handleClose = () => setOpen(false);
 
   // Form states
-  const [minutes, setMinutes] = useState('');
-  const [newDate, setNewDate] = useState(date);
+  const [minutes, setMinutes] = useState(String(time));
+  const [newDate, setNewDate] = useState(makeDate(date));
 
   // State handlers
   const handleMinutes = e => {
@@ -46,6 +47,14 @@ export default function NewSessionModal({
   const handleNewDate = e => {
     setNewDate(e.target.value);
   };
+
+  function makeDate(date) {
+    date = new Date(date.toString());
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  }
 
   // submit API call
   function handleSubmit() {

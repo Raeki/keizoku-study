@@ -10,7 +10,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-// List item definition TURN INTO A COMPONENT
 export default function SessionItem({
   date,
   time,
@@ -18,20 +17,26 @@ export default function SessionItem({
   sessions,
   setSessions,
 }) {
+  function makeInfo(date, time) {
+    return (
+      <>
+        {new Date(date).toString().substring(3, date.length - 8)} <br />
+        Minutes: {time}
+      </>
+    );
+  }
+
   return (
-    <ListItem disablePadding key={sessionID}>
+    <ListItem disablePadding>
       <ListItemButton>
-        <ListItemText
-          primary={`${new Date(date)
-            .toString()
-            .substring(0, date.length - 8)} Minutes: ${time}`}
-        />
+        <ListItemText primary={makeInfo(date, time)} />
       </ListItemButton>
       <ListItemButton>
         <ListItemText
           primary={
             <EditSessionModal
               sessionID={sessionID}
+              time={time}
               date={date}
               sessions={sessions}
               setSessions={setSessions}
