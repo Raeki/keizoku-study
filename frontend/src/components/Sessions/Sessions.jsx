@@ -19,6 +19,7 @@ export default function Sessions({
   setTopicGoal,
   topicName,
   setTopicName,
+  limit,
 }) {
   // useStates
   const [sessions, setSessions] = useState([]);
@@ -28,7 +29,7 @@ export default function Sessions({
     (async () => {
       try {
         const id = topicID || localStorage.getItem('topicID');
-        if (typeof id === 'number') {
+        if (id) {
           const data = await getAllSessions(id);
           setSessions(data);
         }
@@ -51,17 +52,20 @@ export default function Sessions({
       <nav aria-label='sessions'>
         <List>
           <SessionsDashboard
-            topicID={topicID}
+            topicID={topicID || localStorage.getItem('topicID')}
             setTopicID={setTopicID}
-            topicName={topicName}
+            topicName={topicName || localStorage.getItem('topicName')}
             setTopicName={setTopicName}
-            topicGoal={topicGoal}
+            topicGoal={topicGoal || localStorage.getItem('topicGoal')}
             setTopicGoal={setTopicGoal}
+            sessions={sessions}
+            setSessions={setSessions}
           />
           {sessions
             .sort((a, b) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return b.id - a.id;
             })
+            .slice(0, limit)
             .map(obj => {
               return (
                 <SessionItem

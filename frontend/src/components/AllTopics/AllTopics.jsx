@@ -48,6 +48,7 @@ export default function AllTopics({
                 setTopicName={setTopicName}
                 topicGoal={obj.goal}
                 setTopicGoal={setTopicGoal}
+                limit={5}
               />
             </Grid>
           );

@@ -42,7 +42,7 @@ export default function NewSessionModal({ sessions, setSessions, topicID }) {
       setDisabled(true);
       try {
         const data = await postNewSession(minutes, topicID);
-        setSessions([data, ...sessions]);
+        setSessions([...sessions, data]);
         setDisabled(false);
         handleClose();
       } catch (e) {

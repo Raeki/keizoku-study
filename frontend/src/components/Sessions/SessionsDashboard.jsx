@@ -22,22 +22,9 @@ export default function SessionsDashboard({
   setTopicName,
   topicGoal,
   setTopicGoal,
+  sessions,
+  setSessions,
 }) {
-  // useStates
-  const [sessions, setSessions] = useState([]);
-
-  // fetch all sessions with topicID
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await getAllSessions(topicID);
-        setSessions(data);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, [topicID]);
-
   // Avg Minutes Logic
   function getAvgMinutes(sessions) {
     if (sessions.length) {
@@ -71,7 +58,9 @@ export default function SessionsDashboard({
           setTopicID(topicID);
           localStorage.setItem('topicID', topicID);
           setTopicName(topicName);
+          localStorage.setItem('topicName', topicName);
           setTopicGoal(topicGoal);
+          localStorage.setItem('topicGoal', topicGoal);
           navigate('/topic');
         }}
       >
