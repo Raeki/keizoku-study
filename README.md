@@ -40,5 +40,3 @@ Instructions assume you will be deploying on [render](https://www.render.com).
 5. Under ```Advanced``` click ```Add Environment Variable```.
 6. Create a variable with Key: ```REACT_APP_API_URL``` set to your backend's full URL as mentioned in Backend setup step 12.
 7. Deploy!
-
-https://raeki-solo-mvp.onrender.com/
